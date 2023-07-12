@@ -12,9 +12,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "cliente")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cliente {
     
     @Id
@@ -30,53 +36,5 @@ public class Cliente {
     @JsonIgnore
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     private Set<Pedido> pedidos;
-
-    public Cliente(){}
-
-    public Cliente(String nome){
-        this.nome = nome;
-    }
-    
-    public Cliente(String nome, Integer id){
-        this.nome = nome;
-        this.id = id;
-    }
-    
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-    
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-     public Set<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(Set<Pedido> pedidos) {
-        this.pedidos = pedidos;
-    }
-    
-    public String getCpf() {
-        return cpf;
-    }
-    
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-    
-    @Override
-    public String toString() {
-        return "Cliente [id=" + id + ", nome=" + nome + "]";
-    }
     
 }

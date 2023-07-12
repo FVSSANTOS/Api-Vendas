@@ -13,9 +13,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "pedido")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Pedido {
 
     @Id
@@ -35,42 +41,5 @@ public class Pedido {
 
     @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> itens;
-    
-    public Integer getId() {
-        return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    public Cliente getCliente() {
-        return cliente;
-    }
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-    public LocalDate getDataPedido() {
-        return dataPedido;
-    }
-    public void setDataPedido(LocalDate dataPedido) {
-        this.dataPedido = dataPedido;
-    }
-    public BigDecimal getTotal() {
-        return total;
-    }
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
-    public List<ItemPedido> getItens() {
-        return itens;
-    }
-    public void setItens(List<ItemPedido> itens) {
-        this.itens = itens;
-    }
-    @Override
-    public String toString() {
-        return "Pedido [id=" + id + ", dataPedido=" + dataPedido + ", total=" + total + "]";
-    }
-
-    
     
 }
