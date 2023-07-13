@@ -2,6 +2,7 @@ package com.fvss.vendas.service.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import com.fvss.vendas.domain.entity.Cliente;
 import com.fvss.vendas.domain.entity.ItemPedido;
 import com.fvss.vendas.domain.entity.Pedido;
 import com.fvss.vendas.domain.entity.Produto;
+import com.fvss.vendas.domain.enums.StatusPedido;
 import com.fvss.vendas.domain.repository.Clientes;
 import com.fvss.vendas.domain.repository.ItensPedido;
 import com.fvss.vendas.domain.repository.Pedidos;
@@ -42,6 +44,7 @@ public class PedidoServiceImpl implements PedidoService{
         pedido.setTotal(dto.getTotal());
         pedido.setDataPedido(LocalDate.now());
         pedido.setCliente(cliente);
+        pedido.setStatus(StatusPedido.REALIZADO);
 
         repository.save(pedido);
         List<ItemPedido> itensPedidos = converterItems(pedido,dto.getItens());
@@ -62,7 +65,7 @@ public class PedidoServiceImpl implements PedidoService{
                     Produto produto = produtosRepository
                     .findById(idProduto)
                     .orElseThrow(
-                        () -> new RegraNegocioException("Código de cliente inválido: "+idProduto
+                        () -> new RegraNegocioException("Código de produto inválido: "+idProduto
                     ));
 
                     ItemPedido itemPedido = new ItemPedido();
@@ -70,5 +73,10 @@ public class PedidoServiceImpl implements PedidoService{
                     itemPedido.setPedido(pedido);
                     return itemPedido;
                 }).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Pedido> obterPedidoCompleto(Integer id) {
+        return repository.findByIdFetchItens(id);
     }
 }
