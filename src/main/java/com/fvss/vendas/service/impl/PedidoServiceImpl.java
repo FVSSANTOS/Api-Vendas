@@ -17,6 +17,7 @@ import com.fvss.vendas.domain.repository.Clientes;
 import com.fvss.vendas.domain.repository.ItensPedido;
 import com.fvss.vendas.domain.repository.Pedidos;
 import com.fvss.vendas.domain.repository.Produtos;
+import com.fvss.vendas.exception.PedidoNaoEncontradoException;
 import com.fvss.vendas.exception.RegraNegocioException;
 import com.fvss.vendas.rest.dto.ItemPedidoDTO;
 import com.fvss.vendas.rest.dto.PedidoDTO;
@@ -79,4 +80,15 @@ public class PedidoServiceImpl implements PedidoService{
     public Optional<Pedido> obterPedidoCompleto(Integer id) {
         return repository.findByIdFetchItens(id);
     }
+
+    @Override
+    @Transactional
+    public void atualizarStatus(Integer id, StatusPedido statusPedido) {
+        repository.findById(id)
+                    .map(pedido -> {
+                        pedido.setStatus(statusPedido);
+                        return repository.save(pedido);
+                    }).orElseThrow(() -> new PedidoNaoEncontradoException() );
+    }
+
 }
