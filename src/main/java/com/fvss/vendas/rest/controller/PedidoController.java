@@ -25,6 +25,8 @@ import com.fvss.vendas.rest.dto.InfromacaoItemPedidoDTO;
 import com.fvss.vendas.rest.dto.PedidoDTO;
 import com.fvss.vendas.service.PedidoService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/pedidos")
 public class PedidoController {
@@ -37,7 +39,7 @@ public class PedidoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Integer save(@RequestBody PedidoDTO dto){
+    public Integer save(@RequestBody @Valid PedidoDTO dto){
         Pedido pedido = service.salvar(dto);
         return pedido.getId();
     }
