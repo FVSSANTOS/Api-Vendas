@@ -26,10 +26,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PedidoDTO {
-    @NotNull(message = "Informe o código do cliente.")
+    @NotNull(message = "{campo.codigo-cliente.obrigratorio}")
     private Integer cliente;
-    @NotNull(message = "Campo total do pedido é obrigratório.")
+    @NotNull(message = "{campo.total-pedido.obrigatorio}")
     private BigDecimal total;
-    @NotEmptyList(message = "Pedidio não pode ser realizado sem itens.")
+    @NotEmptyList(message = "{campo.itens-pedido.obrigatorio}")
     private List<ItemPedidoDTO> itens;
 }
