@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 import com.fvss.vendas.domain.entity.UserModel;
 import com.fvss.vendas.domain.repository.Users;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class UserDetailsServiceImpl implements UserDetailsService{
 
     @Autowired
