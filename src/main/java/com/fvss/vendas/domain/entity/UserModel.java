@@ -27,7 +27,7 @@ public class UserModel implements UserDetails{
     private Integer id;
 
     @Column(name = "user_name", unique = true, nullable = false)
-    private String username;
+    private String userName;
 
     @Column(name = "password", nullable = false)
     private String password;
@@ -50,7 +50,7 @@ public class UserModel implements UserDetails{
 
     @Override
     public String getUsername() {
-       return this.username;
+       return this.userName;
     }
 
     @Override

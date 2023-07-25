@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.fvss.vendas.domain.entity.UserModel;
 
 @Repository
-public interface Users extends JpaRepository<Users, Integer>{
+public interface Users extends JpaRepository<UserModel, Integer>{
     
     Optional<UserModel> findByUserName(String username);
 }
