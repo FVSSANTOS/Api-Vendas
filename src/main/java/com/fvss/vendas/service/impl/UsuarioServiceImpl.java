@@ -5,10 +5,12 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.fvss.vendas.domain.entity.Usuario;
 import com.fvss.vendas.domain.repository.UsuarioRepository;
+import com.fvss.vendas.exception.SenhaInvalidaException;
 
 import jakarta.transaction.Transactional;
 
@@ -18,10 +20,22 @@ public class UsuarioServiceImpl implements UserDetailsService {
 
     @Autowired
     private UsuarioRepository repository;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Transactional
     public Usuario salvar(Usuario usuario){
         return repository.save(usuario);
+    }
+
+    public UserDetails autenticar(Usuario usuario){
+        UserDetails user = loadUserByUsername(usuario.getLogin());
+        boolean senhasBatem = encoder.matches(usuario.getSenha(), user.getPassword());
+
+        if(senhasBatem){
+            return user;
+        }
+        throw new SenhaInvalidaException();
     }
 
     @Override
