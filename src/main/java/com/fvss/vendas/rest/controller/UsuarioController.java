@@ -29,6 +29,7 @@ public class UsuarioController {
     private final UsuarioServiceImpl usuarioService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Usuario salvar (@RequestBody @Valid Usuario usuario){
@@ -40,7 +41,9 @@ public class UsuarioController {
     @PostMapping("/auth")
     public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais){
         try {
-            Usuario usuario = Usuario.builder().login(credenciais.getLogin()).senha(credenciais.getSenha()).build();
+            Usuario usuario = Usuario.builder()
+                    .login(credenciais.getLogin())
+                    .senha(credenciais.getSenha()).build();
             UserDetails usuarioAutenticado = usuarioService.autenticar(usuario);
             
             String token = jwtService.gerarToken(usuario);
